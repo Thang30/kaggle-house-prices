@@ -4,8 +4,8 @@ import os
 import helpers.settings as settings
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import cross_val_score
 
+# load data
 train = pd.read_csv(os.path.join(
     os.getcwd(), settings.DATA_DIR, 'train_processed.csv'))
 test = pd.read_csv(os.path.join(
@@ -15,12 +15,12 @@ y_train = train["SalePrice"]
 X_train = train.drop(["SalePrice"], axis=1)
 X_test = test
 
+# create a simple linear regression model
 model1 = LinearRegression()
 model1.fit(X_train, y_train)
 y_test = model1.predict(X_test)
 
-print(cross_val_score(model1, X_train, y_train))
-
+# submission
 test_df = pd.read_csv(os.path.join(os.getcwd(), settings.DATA_DIR, 'test.csv'))
 submission1 = pd.DataFrame({
     "Id": test_df["Id"],
